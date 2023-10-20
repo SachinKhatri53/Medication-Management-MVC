@@ -1,0 +1,93 @@
+﻿@model Medication_Management_System.Models.Medication
+
+@{
+    ViewData["Title"] = "AddMedication";
+}
+
+<h4>Add Medication</h4>
+<hr />
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <form asp-action="AddMedication">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="form-group">
+                    <label asp-for="MedicationName" class="control-label"></label>
+                    <input asp-for="MedicationName" class="form-control" />
+                    <span asp-validation-for="MedicationName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Duration" class="control-label"></label>
+                        <input asp-for="Duration" class="form-control" />
+                        <span asp-validation-for="Duration" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Amount" class="control-label"></label>
+                        <input asp-for="Amount" class="form-control" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Frequency" class="control-label"></label>
+                        <input asp-for="Frequency" class="form-control" min="1" />
+                        <span asp-validation-for="Frequency" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Mode" class="control-label"></label>
+                        <input asp-for="Mode" class="form-control" />
+                        <span asp-validation-for="Mode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Time" class="control-label"></label>
+                        <select asp-for="Time" class="form-control">
+                            <option value="Select">Select</option>
+                            <option value="Before Meal">Before Meal</option>
+                            <option value="After Meal">After Meal</option>
+                        </select>
+                        <span asp-validation-for="Time" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="PrescribedBy" class="control-label"></label>
+                        <input asp-for="PrescribedBy" class="form-control" />
+                        <span asp-validation-for="PrescribedBy" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="IssuedDate" class="control-label"></label>
+                        <input asp-for="IssuedDate" class="form-control" type="date" />
+                        <span asp-validation-for="IssuedDate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add Medication" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

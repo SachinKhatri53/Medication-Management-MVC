@@ -1,0 +1,157 @@
+﻿@using Medication_Management_System.Models
+@using System.Collections.ObjectModel
+@using Newtonsoft.Json;
+@model List<Medication>
+
+<div class="text-center">
+    <h1>Medication</h1>
+</div>
+<div class="text-end">
+    <a asp-controller="Medication" asp-action="AddMedication" class="btn btn-primary">Add Medication</a>
+</div>
+<div class="medication-table table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+            <th>Medication Name</th>
+            <th>Duration</th>
+            <th>Amount</th>
+            <th>Mode</th>
+            <th>Frequency</th>
+            <th>Time</th>
+            <th>Prescribed By</th>
+            <th>Issued Date</th>
+            <th colspan="3">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count == 0)
+            {
+                <tr>
+                    <td class="text-center" colspan = "11">No items</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var medication in Model)
+                {
+                    <tr>
+                        <td>@medication.MedicationName</td>
+                        <td>@medication.Duration</td>
+                        <td>@medication.Amount</td>
+                        <td>@medication.Mode</td>
+                        <td>@medication.Frequency</td>
+                        <td>@medication.Time</td>
+                        <td>@medication.PrescribedBy</td>
+                        <td class="table-date">@medication.IssuedDate</td>
+                        <td><i data-medication-details='@JsonConvert.SerializeObject(medication)' data-bs-toggle="modal" data-bs-target="#viewMedicationModal" class="fa-solid fa-eye text-info"></i></td>
+                        <td><a asp-action="EditMedication" asp-controller="Medication" asp-route-id="@medication.MedicationId"><i class="fa-solid fa-pen-to-square text-warning"></i></a></td>
+                        <td><i data-medication-details='@JsonConvert.SerializeObject(medication)' data-bs-toggle="modal" data-bs-target="#deleteMedicationModal" class="fa-solid fa-trash text-danger"></i></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@* View Medication Modal *@
+<div class="modal fade" id="viewMedicationModal" tabindex="-1" role="dialog" aria-labelledby="viewMedicationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fw-bold" id="viewMedicationModalLabel">Medication Detail</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Medication Name:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="medication-name"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Duration:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="duration"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Dosage:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="amount"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Frequency:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="frequency"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Mode:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mode"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">In Take:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="time"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Prescribed By:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="prescribed-by"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Issued Date:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="issued-date"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Delete Medication Modal *@
+<div class="modal fade" id="deleteMedicationModal" tabindex="-1" role="dialog" aria-labelledby="deleteMedicationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="deleteMedicationModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this medication?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="deleteMedicationButton" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,186 @@
+﻿@using Medication_Management_System.Models
+@using Newtonsoft.Json;
+@{
+    ViewData["Title"] = "Home Page";
+}
+@model Medication_Management_System.Models.DashboardFacts
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                <script>
+                    var medication = @Html.Raw(JsonConvert.SerializeObject(Model.TotalMedication.Select(m => m.MedicationName)));
+                    var frequency = @Html.Raw(JsonConvert.SerializeObject(Model.TotalMedication.Select(m => m.Frequency)));
+                </script>
+                <div class="row justify-content-around">
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="card">
+                            <div class="card-header fw-bold text-center text-primary">Total Medication</div>
+                            <div class="card-body text-center fs-1 text-primary">
+                                <i class="fa-solid fa-pills"></i>
+                            </div>
+                            <div class="card-footer fw-bold text-center text-primary">@Model.TotalMedication.Count()</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="card">
+                            <div class="card-header fw-bold text-center text-secondary">Total Schedule</div>
+                            <div class="card-body text-center fs-1 text-secondary">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                            </div>
+                            <div class="card-footer fw-bold text-center text-secondary">@Model.TotalSchedule</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="card ">
+                            <div class="card-header fw-bold text-center text-success">Today's Medication</div>
+                            <div class="card-body text-center fs-1 text-success">
+                                <div class=""><i class="fa-solid fa-list-check"></i></div>
+                            </div>
+                            <div class="card-footer text-center fw-bold text-success">@Model.TodayMedication.Count()</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="card">
+                            <div class="card-header fw-bold text-center text-danger">Missed Schedule</div>
+                            <div class="card-body text-center fs-1 text-danger">
+                                <i class="fa-solid fa-calendar-xmark"></i>
+                            </div>
+                            <div class="card-footer text-center fw-bold text-danger">@Model.MissedSchedule</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12" id="myPlot"></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="text-center">
+                    <h5 class="fw-bold">Today's Upcoming Medication</h5>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Medication Name</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(Model.TodayMedication.Count().Equals(0)){
+                            <tr>
+                                <td colspan="2" class="text-center">No upcoming medication for today</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var todaysSchedule in Model.TodayMedication)
+                            {
+                                <tr>
+                                    <td>@todaysSchedule.Medication.MedicationName</td>
+                                    <td class="table-time">@todaysSchedule.ScheduleTime</td>
+                                </tr>
+                            }
+                        }
+                        
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="row text-center">
+                    <h5 class=" fw-bold">Statistics</h5>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <p>Before Meal</p>
+                    </div>
+                    <div class="col-3">
+                        &#8594;
+                    </div>
+                    <div class="col-4">
+                        @Model.BeforeMeal
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <p>After Meal</p>
+                    </div>
+                    <div class="col-3">
+                        &#8594;
+                    </div>
+                    <div class="col-4">
+                        @Model.AfterMeal
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <p>Morning</p>
+                    </div>
+                    <div class="col-3">
+                        &#8594;
+                    </div>
+                    <div class="col-4">
+                        @Model.Morning
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <p>Afternoon</p>
+                    </div>
+                    <div class="col-3">
+                        &#8594;
+                    </div>
+                    <div class="col-4">
+                      @Model.Afternoon
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <p>Evening</p>
+                    </div>
+                    <div class="col-3">
+                        &#8594;
+                    </div>
+                    <div class="col-4">
+                        @Model.Evening
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <p>Oral</p>
+                    </div>
+                    <div class="col-3">
+                        &#8594;
+                    </div>
+                    <div class="col-4">
+                        @Model.Oral
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <p>Otic</p>
+                    </div>
+                    <div class="col-3">
+                        &#8594;
+                    </div>
+                    <div class="col-4">
+                        @Model.Otic
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <p>Opthalmic</p>
+                    </div>
+                    <div class="col-3">
+                        &#8594;
+                    </div>
+                    <div class="col-4">
+                        @Model.Opthalmic
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

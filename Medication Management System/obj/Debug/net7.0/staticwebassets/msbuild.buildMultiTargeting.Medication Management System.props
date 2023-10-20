@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Medication Management System.props" />
+</Project>

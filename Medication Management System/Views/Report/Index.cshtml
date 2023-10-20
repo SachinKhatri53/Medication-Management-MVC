@@ -1,0 +1,168 @@
+﻿@using Newtonsoft.Json;
+@model List<Report>
+<div class="text-center">
+    <h1>Report</h1>
+</div>
+
+<div class="report-table">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Medication Name</th>
+                <th>Amount</th>
+                <th>Mode</th>
+                <th>In Take</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th colspan="2" class="text-ceter">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count == 0)
+            {
+                <tr>
+                    <td class="text-center" colspan="10">No items</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var report in Model)
+                {
+                    <tr>
+                        <td>@report.MedicationName</td>
+                        <td>@report.Amount</td>
+                        <td>@report.Mode</td>
+                        <td>@report.Time</td>
+                        <td class="table-date">@report.ScheduleDate</td>
+                        <td class="table-time">@report.ScheduleTime</td>
+                        @if (!String.IsNullOrEmpty(report.Status) && report.Status.Equals("Pending"))
+                        {
+                            <td class="text-secondary">@report.Status</td>
+                        }
+                        else if (!String.IsNullOrEmpty(report.Status) && report.Status.Equals("Missed"))
+                        {
+                            <td class="text-danger">@report.Status</td>
+                        }
+                        else
+                        {
+                            <td class="text-success">@report.Status</td>
+                        }
+                        
+                        <td><i data-report-details='@JsonConvert.SerializeObject(report)' data-bs-toggle="modal" data-bs-target="#viewReportModal" class="fa-solid fa-eye text-info"></i></td>
+                        <td><i class="fa-solid fa-file-pdf text-danger"></i></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@* View Report Modal *@
+<div class="modal fade" id="viewReportModal" tabindex="-1" role="dialog" aria-labelledby="viewReportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h3 class="modal-title fw-bold" id="viewReportModalLabel"></h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Medication Name:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="medication-name"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Duration:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="duration"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Dosage:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="amount"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Frequency:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="frequency"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Mode:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mode"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">In Take:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="time"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Prescribed By:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="prescribed-by"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Issued Date:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="issued-date"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Scheduled Date:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="date"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Scheduled Time:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="schedule-time"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="fw-bold">Status:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="status"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

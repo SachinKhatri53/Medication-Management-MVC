@@ -1,0 +1,9 @@
+﻿.form-group{
+    margin-bottom:20px;
+}
+i {
+    cursor: pointer;
+}
+.actions i {
+    margin: 10px 10px 0 0;
+}

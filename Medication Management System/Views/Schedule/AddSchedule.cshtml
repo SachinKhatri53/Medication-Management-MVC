@@ -1,0 +1,41 @@
+﻿@model Medication_Management_System.Models.Schedule
+
+@{
+    ViewData["Title"] = "AddSchedule";
+}
+
+<h4>Add Schedule</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <form asp-action="AddSchedule">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Medication.MedicationId, "Medication")
+                @Html.DropDownListFor(model => model.Medication.MedicationId, (IEnumerable<SelectListItem>)ViewBag.MedicationList, "Select Medication", new { @class = "form-control"})
+                <span asp-validation-for="Medication" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScheduleTime" class="control-label"></label>
+                <input asp-for="ScheduleTime" class="form-control" type="time" />
+                <span asp-validation-for="ScheduleTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" type="date" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add Schedule" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
